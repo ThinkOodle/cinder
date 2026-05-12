@@ -8,9 +8,9 @@ class UploadTest < ActiveSupport::TestCase
     assert_equal Upload::SLUG_LENGTH, upload.slug.length
   end
 
-  test "to_param appends .log" do
-    upload = build_upload(slug: "abc12345")
-    assert_equal "abc12345.log", upload.to_param
+  test "to_param returns the slug" do
+    upload = build_upload(slug: "abc123")
+    assert_equal "abc123", upload.to_param
   end
 
   test "live scope excludes expired, deleted, and blocked" do

@@ -11,7 +11,7 @@ POST /
   multipart: file=@log.txt, expires=24 (optional, hours)
   → 201, body is "<absolute URL>\n"
 
-GET /:slug.log
+GET /:slug
   → 200, text/plain; charset=utf-8, X-Content-Type-Options: nosniff
   → 404 for unknown, expired, deleted, or blocked
 

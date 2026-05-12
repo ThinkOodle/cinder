@@ -12,7 +12,7 @@ class UploadsControllerTest < ActionDispatch::IntegrationTest
     assert_response :created
     assert_equal "text/plain", @response.media_type
     body = @response.body.strip
-    assert_match %r{\Ahttp://www\.example\.com/[A-Za-z0-9]+\.log\z}, body
+    assert_match %r{\Ahttp://www\.example\.com/[A-Za-z0-9]+\z}, body
     upload = Upload.sole
     assert_equal "log.txt", upload.file.filename.to_s
     assert upload.expires_at.between?(23.hours.from_now, 25.hours.from_now)
@@ -66,11 +66,11 @@ class UploadsControllerTest < ActionDispatch::IntegrationTest
     assert Upload.sole.expires_at.between?(23.hours.from_now, 25.hours.from_now)
   end
 
-  test "GET /:slug.log returns content with safe headers" do
+  test "GET /:slug returns content with safe headers" do
     post "/", params: { file: @log }
     upload = Upload.sole
 
-    get "/#{upload.slug}.log"
+    get "/#{upload.slug}"
     assert_response :ok
     assert_equal "text/plain", @response.media_type
     assert_equal "utf-8", @response.charset
@@ -81,30 +81,30 @@ class UploadsControllerTest < ActionDispatch::IntegrationTest
 
   test "GET returns 404 if attachment is missing" do
     upload = Upload.create!(byte_size: 10, sha256: "a" * 64, expires_at: 1.hour.from_now)
-    get "/#{upload.slug}.log"
+    get "/#{upload.slug}"
     assert_response :not_found
   end
 
   test "GET unknown slug returns 404" do
-    get "/notreal00.log"
+    get "/notreal"
     assert_response :not_found
   end
 
   test "GET expired returns 404" do
     upload = build_persisted(expires_at: 1.minute.ago)
-    get "/#{upload.slug}.log"
+    get "/#{upload.slug}"
     assert_response :not_found
   end
 
   test "GET deleted returns 404" do
     upload = build_persisted(deleted_at: Time.current)
-    get "/#{upload.slug}.log"
+    get "/#{upload.slug}"
     assert_response :not_found
   end
 
   test "GET blocked returns 404" do
     upload = build_persisted(moderation_status: :blocked)
-    get "/#{upload.slug}.log"
+    get "/#{upload.slug}"
     assert_response :not_found
   end
 

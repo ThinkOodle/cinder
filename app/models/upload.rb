@@ -1,5 +1,5 @@
 class Upload < ApplicationRecord
-  SLUG_LENGTH = 16
+  SLUG_LENGTH = 6
   MAX_SLUG_RETRIES = 5
 
   has_one_attached :file
@@ -21,7 +21,7 @@ class Upload < ApplicationRecord
   end
 
   def to_param
-    "#{slug}.log"
+    slug
   end
 
   def expired?

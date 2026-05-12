@@ -31,8 +31,7 @@ class UploadsController < ApplicationController
   end
 
   def show
-    slug = params[:slug].to_s.chomp(".log")
-    upload = Upload.find_live(slug)
+    upload = Upload.find_live(params[:slug])
     return not_found unless upload && upload.file.attached?
 
     response.headers["X-Content-Type-Options"] = "nosniff"
