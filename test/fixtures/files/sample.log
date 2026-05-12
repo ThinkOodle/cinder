@@ -1,0 +1,5 @@
+[2026-05-09 00:00:00] omarchy boot start
+[2026-05-09 00:00:01] loading kernel
+[2026-05-09 00:00:02] mounting filesystems
+[2026-05-09 00:00:03] systemd starting services
+[2026-05-09 00:00:04] omarchy boot complete
